@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:lovelink/views/components/LoveNavBar.dart';
 
 class Config extends StatefulWidget {
   const Config({Key? key}) : super(key: key);
@@ -15,7 +14,7 @@ class _ConfigState extends State<Config> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          content: Text("Are you sure you want to log out?"),
+          content: const Text("Are you sure you want to log out?"),
           actions: [
             TextButton(
               onPressed: () async {
@@ -25,13 +24,13 @@ class _ConfigState extends State<Config> {
                 await prefs.remove('user');
                 await prefs.remove('password');
               },
-              child: Text("Yes"),
+              child: const Text("Yes"),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text("No"),
+              child: const Text("No"),
             ),
           ],
         );
@@ -43,18 +42,13 @@ class _ConfigState extends State<Config> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Config'),
+        title: const Text('Config'),
       ),
       body: Center(
         child: ElevatedButton(
           onPressed: closeSession,
-          child: Text('Log out'),
+          child: const Text('Log out'),
         ),
-      ),
-      bottomNavigationBar: LoveNavBar(
-        currentIndex: 3,
-        onTabChange: (index) {
-        },
       ),
     );
   }

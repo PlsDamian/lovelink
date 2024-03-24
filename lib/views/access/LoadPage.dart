@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lovelink/views/access/Login.dart';
-import 'package:lovelink/views/main_pages/matches.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../components/LoveNavBar.dart';
 
 class LoadPage extends StatefulWidget {
   const LoadPage({Key? key}) : super(key: key);
@@ -19,7 +20,6 @@ class _LoadPageState extends State<LoadPage> {
     // Simulate delay for demonstration purposes
     await Future.delayed(const Duration(seconds: 4));
 
-
     return user.isNotEmpty && password.isNotEmpty;
   }
 
@@ -35,7 +35,7 @@ class _LoadPageState extends State<LoadPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (BuildContext context) => const Matches(),
+          builder: (BuildContext context) => const LoveNavBar(), // Navigate to LoveNavBar if session is active
         ),
       );
     } else {

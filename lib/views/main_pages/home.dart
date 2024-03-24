@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lovelink/views/main_pages/config/config.dart';
-import 'package:lovelink/views/main_pages/profile.dart';
-import 'package:lovelink/views/main_pages/matches.dart';
-import 'package:lovelink/views/components/LoveNavBar.dart';
 import 'package:lovelink/constants.dart';
 
 
@@ -15,20 +11,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  final List<Widget> _screens = [
-    const Center(child: Text('Home')),
-    const Matches(),
-    Profile(),
-    const Config(),
-  ];
-
-  int _currentIndex = 0; // Initialize currentIndex
-
-  void tabNavigation(int index) {
-    setState(() {
-      _currentIndex = index; // Update currentIndex
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +18,7 @@ class _HomeState extends State<Home> {
       body: Stack(
         children: [
           Container(color: background),
-          _screens[_currentIndex],
         ],
-      ),
-      bottomNavigationBar: LoveNavBar(
-        currentIndex: _currentIndex,
-        onTabChange: tabNavigation,
       ),
     );
   }

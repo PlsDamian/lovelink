@@ -15,7 +15,8 @@ class LoveTextField extends StatelessWidget {
       this.icono,
       required this.Wsize,
       this.controller,
-      this.textColor});
+      this.textColor
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class LoveTextField extends StatelessWidget {
           border: const OutlineInputBorder(),
           labelText: Placeholder,
         ),
-        style: TextStyle(color: textColor),
+        style: TextStyle(color: textColor??Colors.black),
       ),
     );
   }

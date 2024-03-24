@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lovelink/views/access/LoadPage.dart';
-import 'package:lovelink/views/access/Login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
       ),
       home: const LoadPage(),

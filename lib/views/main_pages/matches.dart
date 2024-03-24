@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lovelink/views/components/PositionedText.dart';
-import 'package:lovelink/views/components/MatchButton.dart';
-import 'package:lovelink/views/components/ReadMore.dart';
-import 'package:lovelink/views/components/LoveNavBar.dart';
+import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:lovelink/models/matchPerson.dart';
+import 'package:lovelink/views/components/LoveLinkCard.dart';
+import 'package:lovelink/constants.dart';
 
 
 class Matches extends StatefulWidget {
@@ -12,132 +12,89 @@ class Matches extends StatefulWidget {
   State<Matches> createState() => _MatchesState();
 }
 
-void inputLike() {
-  print("Like");
-}
-
-void inputDislike() {
-  print("Dislike");
-}
-
 class _MatchesState extends State<Matches> {
-  int _currentIndex = 1;
 
-  void tabNavigation(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
+  void inputLike(MatchPerson data) {
+    print("Like a ${data.name}");
   }
+
+  void inputDislike(MatchPerson data) {
+    print("Dislike a ${data.name}");
+  }
+
+  List<MatchPerson> profiles = [
+    MatchPerson(
+      id: 1,
+      name: "Talia",
+      age: 21,
+      gender: 'Indefinido',
+      photo: "assets/images/cat.jpg",
+      description: "Description...",
+    ),
+    MatchPerson(
+      id: 2,
+      name: "Talia",
+      age: 20,
+      gender: 'Indefinido',
+      photo: "assets/images/cat.jpg",
+      description: "Description...",
+    ),
+    MatchPerson(
+      id: 3,
+      name: "Talia",
+      age: 19,
+      gender: 'Indefinido',
+      photo: "assets/images/cat.jpg",
+      description: "Description...",
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff292929),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: const BackButton(
-          color: Colors.black,
-        ),
-      ),
-      body:
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(
-            width: double.infinity,
+        backgroundColor: background,
+        body: Flexible(
+            child: CardSwiper(
+          allowedSwipeDirection: const AllowedSwipeDirection.symmetric(
+              horizontal: true, vertical: true),
+          onSwipe: (value1, value2, value3) {
+            if (value3 == CardSwiperDirection.right) {
+              inputLike(profiles[value1]);
+            } else {
+              inputDislike(profiles[value1]);
+            }
+            return true;
+          },
+          cardsCount: profiles.length,
+          cardBuilder: (context, index, percentThresholdX, percentThresholdY) =>
+              LoveLinkCard(
+            like: () => inputLike(profiles[index]),
+            dislike: () => inputDislike(profiles[index]),
+            matchData: profiles[index],
           ),
-          Container(
-            width: 300,
-            height: 500,
-            decoration: BoxDecoration(
-              image: const DecorationImage(
-                  image: AssetImage("assets/images/cat.jpg"),
-                  fit: BoxFit.cover),
-              borderRadius: BorderRadius.circular(5),
-              border: Border.all(color: Colors.transparent),
-            ),
-            child: Stack(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 60,
-                  decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.3),
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(0),
-                          topRight: Radius.circular(0))),
-                ),
-                const PositionedText(
-                  textLabel: "Genero: Hombre",
-                  top: 7,
-                  left: 160,
-                  textSize: 16,
-                  width: 140,
-                  height: 60,
-                ),
-                const PositionedText(
-                  textLabel: "Edad: 22",
-                  top: 30,
-                  left: 160,
-                  textSize: 16,
-                  width: 130,
-                  height: 60,
-                ),
-                const PositionedText(
-                  textLabel: "Daniel",
-                  top: 5,
-                  left: 10,
-                  textSize: 23,
-                  width: 140,
-                  height: 160,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        GestureDetector(
-                          onTap: inputDislike,
-                          child: const MatchButton(
-                            colorin: Color(0xffffa31a),
-                            colorbor: Color(0xff1b1b1b),
-                            imagePath: "assets/icons/Xg.png",
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: inputLike,
-                          child: const MatchButton(
-                            colorin: Color(0xFF292929),
-                            colorbor: Color(0xffffa31a),
-                            imagePath: "assets/icons/Corazon.png",
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          const ReadMore(descripcion: "Me llamo Daniel"
-              "\n"
-              "\nMe gusta la musica de todo tipo pero sobre todo tranquila y los videojuegos"
-              "\n"
-              "\nTengo 2 perros y si tienes 1 gato podemos conocermos 😊"
-              "\n"
-              "\n¡Espero conocerte pronto!")
-        ],
-      ),
-      bottomNavigationBar: LoveNavBar(
-        currentIndex: _currentIndex,
-        onTabChange: tabNavigation,
-      ),
-    );
+        )));
   }
 }
+
+/*
+* ExpandableCarousel(
+        options: CarouselOptions(
+          autoPlay: false,
+          showIndicator: false,
+          autoPlayInterval: const Duration(seconds: 2),
+        ),
+        items: profiles.map((i) {
+          return Builder(
+            builder: (BuildContext context) {
+              return SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: LoveLinkCard(
+                    like: ()=>inputLike(i),
+                    dislike: ()=>inputDislike(i),
+                    matchData: i,
+                  ));
+            },
+          );
+        }).toList(),
+      )*/
